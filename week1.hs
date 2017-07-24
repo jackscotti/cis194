@@ -24,9 +24,6 @@ separateDigits x
   | x `div` 10 == 0 = [x]
   | otherwise       = separateDigits (x `div` 10) ++ [x `mod` 10]
 
--- separateDigitsInList :: [Integer]
--- separateDigitsInList = (concat (map separateDigits (doubleEveryOtherReverse numbers)))
-
 separateDigitsInList :: [Integer] -> [Integer]
 separateDigitsInList numbers = (concat (map separateDigits (doubleEveryOtherReverse numbers)))
 
@@ -39,9 +36,14 @@ isRemainderValid n
   | n == 0    = True
   | otherwise = False
 
-isCreditCardNumberValid :: [Integer] -> Bool
-isCreditCardNumberValid numbers = isRemainderValid (remainder (separateDigitsInList (doubleEveryOther numbers)))
+isCreditCardNumberValid :: Integer -> Bool
+isCreditCardNumberValid numbers =
+  isRemainderValid $
+  remainder $
+  separateDigitsInList $
+  doubleEveryOther $
+  separateDigits numbers
 
 main :: IO()
 main =
-  print (isCreditCardNumberValid numbers)
+  print (isCreditCardNumberValid 4012888888881882)
