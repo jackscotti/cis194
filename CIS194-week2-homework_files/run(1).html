@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://code.world/run.html?mode=haskell&dhash=Dal2TK1RkY3oFhVAlSz1YAw -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><script src="./polyfill.min.js"></script>
+  
+    <title>CodeWorld</title>
+    <style type="text/css">
+      * { margin: 0; overflow: hidden }
+      #screen {
+          cursor: default;
+          width: 100vw;
+          height: 100vw;
+          max-height: 100vh;
+          max-width: 100vh;
+      }
+    </style>
+  <script type="text/javascript" src="./runJS(1)"></script></head>
+  <body style="text-align: center;">
+    <canvas id="screen" width="400" height="400"></canvas>
+    <img id="cwlogo" style="display: none" src="./codeworld.png" width="900" height="200">
+  
+  <script type="text/javascript">
+    function reportRuntimeError(err, str) {
+      if (window.parent.addToMessage) {
+        var message = window.parent.addToMessage('\n' + str);
+
+        if (err) {
+          var message = window.parent.document.getElementById('message');
+          message.classList.add('error');
+        }
+      } else {
+        console.log(str);
+      }
+    }
+  </script>
+
+  <script type="text/javascript">
+    // params from the URL
+    var paramList = location.search.slice(1).split('&');
+    var params = {}
+    for (var i = 0; i < paramList.length; i++) {
+      var name = paramList[i].split('=')[0];
+      var value = paramList[i].slice(name.length + 1);
+      params[name] = value;
+    }
+    // params from the hash
+    paramList = location.hash.slice(1).split('&');
+    for (var i = 0; i < paramList.length; i++) {
+      var name = paramList[i].split('=')[0];
+      var value = paramList[i].slice(name.length + 1);
+      params[name] = value;
+    }
+
+    var hash = params['hash'];
+    var dhash = params['dhash'];
+    var mode = params['mode'];
+    // Game id is just dumped in the global JS namespace and read there by gameOf
+    var gid = params['gid']
+    if (!mode) mode = 'codeworld';
+
+    var uri = 'runJS?mode=' + mode;
+    if (hash) uri += '&hash=' + hash;
+    if (dhash) uri += '&dhash=' + dhash;
+
+    var script = document.createElement('script');
+    script.setAttribute('type', 'text/javascript');
+    script.setAttribute('src', uri);
+    document.head.appendChild(script);
+  </script>
+
+  <script type="text/javascript" src="./debugmode.js"></script>
+
+</body></html>
