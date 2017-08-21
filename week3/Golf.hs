@@ -19,11 +19,11 @@ module Golf where
   localMaxima [] = []
   localMaxima [_] = []
   localMaxima [_,_] = []
-  localMaxima [x,y,z] = [y | isMaxima x y z]
-  localMaxima (x:y:z:remainder) = do
-    let maxima = [y | isMaxima x y z]
-    maxima ++ localMaxima (y:z:remainder)
+  localMaxima [x,y,z] = maxima x y z
+  localMaxima (x:y:z:remainder) = maxima x y z ++ localMaxima (y:z:remainder)
 
+  maxima :: Integer -> Integer -> Integer -> [Integer]
+  maxima a b c = [b | isMaxima a b c]
 
   isMaxima :: Integer -> Integer -> Integer -> Bool
   isMaxima x y z = x < y && y > z
